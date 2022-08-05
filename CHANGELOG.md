@@ -1,3 +1,7 @@
+## [3.3.5](https://github.com/codexsoft/dotenv-flow/compare/v3.3.4...v3.3.5) (2022-08-05)
+
+* **dotenv-flow:** clarify logic of loading `.env.local` under `test` environment in `Variables overwriting/priority` section of readme.md
+
 ## [3.3.4](https://github.com/codexsoft/dotenv-flow/compare/v3.3.3...v3.3.4) (2022-08-05)
 
 
