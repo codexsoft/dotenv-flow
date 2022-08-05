@@ -1,6 +1,6 @@
 {
   "name": "@codexsoft/dotenv-flow",
-  "version": "3.3.1",
+  "version": "3.3.2",
   "description": "Loads environment variables from `.env.[development|test|production][.local]` files",
   "keywords": [
     "dotenv-flow",
@@ -24,6 +24,7 @@
   "files": [
     "lib/env-options.js",
     "lib/cli-options.js",
+    "index.d.ts",
     "config.js"
   ],
   "dependencies": {
