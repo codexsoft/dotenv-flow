@@ -1,4 +1,4 @@
-# dotenv-flow
+# @codexsoft/dotenv-flow
 
 <img src="https://raw.githubusercontent.com/kerimdzhanov/dotenv-flow/master/dotenv-flow@2x.png" alt="dotenv-flow" width="280" height="140" align="right" />
 
@@ -8,12 +8,12 @@
 
 Storing configuration in _environment variables_ separate from code and grouping them by environments like _development_, _test_ and _production_ is based on [The Twelve-Factor App](https://12factor.net/config) methodology.
 
-[![npm version](https://badge.fury.io/js/dotenv-flow.svg)](https://badge.fury.io/js/dotenv-flow)
+This repo is a fork of original `dotenv-flow` package written by Dan Kerimdzhanov, with some extra features like optional allowing load .env.local for `test` environment.
+
+[![npm version](https://badge.fury.io/js/@codexsoft%2Fdotenv-flow.svg)](https://badge.fury.io/js/@codexsoft%2Fdotenv-flow)
 [![npm downloads](https://badgen.net/npm/dw/dotenv-flow)](https://www.npmjs.com/package/dotenv-flow)
-[![Build Status](https://travis-ci.org/kerimdzhanov/dotenv-flow.svg?branch=master)](https://travis-ci.org/kerimdzhanov/dotenv-flow)
-[![dependencies status](https://david-dm.org/kerimdzhanov/dotenv-flow/status.svg)](https://david-dm.org/kerimdzhanov/dotenv-flow)
-[![Known Vulnerabilities](https://snyk.io/test/github/kerimdzhanov/dotenv-flow/badge.svg?targetFile=package.json)](https://snyk.io/test/github/kerimdzhanov/dotenv-flow?targetFile=package.json)
-[![node version](https://badgen.net/npm/node/dotenv-flow)](https://nodejs.org/en/about/releases)
+[![Build Status](https://travis-ci.org/kerimdzhanov/dotenv-flow.svg?branch=master)](https://travis-ci.org/codexsoft/dotenv-flow)
+[![Known Vulnerabilities](https://snyk.io/test/github/codexsoft/dotenv-flow/badge.svg?targetFile=package.json)](https://snyk.io/test/github/codexsoft/dotenv-flow?targetFile=package.json)
 
 
 ## Installation
@@ -21,13 +21,13 @@ Storing configuration in _environment variables_ separate from code and grouping
 Using NPM:
 
 ```sh
-$ npm install dotenv-flow --save
+$ npm install @codexsoft/dotenv-flow --save
 ```
 
 Using Yarn:
 
 ```sh
-$ yarn add dotenv-flow
+$ yarn add @codexsoft/dotenv-flow
 ```
 
 
@@ -36,7 +36,7 @@ $ yarn add dotenv-flow
 As early as possible in your application, require and configure **dotenv-flow**.
 
 ```js
-require('dotenv-flow').config();
+require('@codexsoft/dotenv-flow').config();
 ```
 
 After this, you can access all the environment variables you have defined in your `.env*` files through `process.env.*`.
@@ -415,7 +415,7 @@ The following API considered as internal, but it is also exposed to give the abi
 
 Returns a list of `.env*` filenames depending on the given `options.node_env`. The resulting list is ordered by the env files priority from lowest to highest.
 
-Also, note that the `.env.local` file will not be listed for `NODE_ENV="test"`, since normally you expect tests to produce the same results for everyone.
+Also, note that the `.env.local` file will not be listed for `NODE_ENV="test"`, since normally you expect tests to produce the same results for everyone. To force loading that file set option `load_env_local_in_test_env` to true.
 
 
 ##### Parameters:
