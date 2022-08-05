@@ -13,7 +13,8 @@ describe('cli_options', () => {
       '--dotenv-flow-path', '/path/to/project',
       '--dotenv-flow-encoding', 'latin1',
       '--dotenv-flow-purge-dotenv', 'yes',
-      '--dotenv-flow-silent', 'yes'
+      '--dotenv-flow-silent', 'yes',
+      '--dotenv-flow-load-env-local-in-test-env', 'yes'
     ]))
       .to.deep.equal({
         node_env: 'production',
@@ -21,7 +22,8 @@ describe('cli_options', () => {
         path: '/path/to/project',
         encoding: 'latin1',
         purge_dotenv: 'yes',
-        silent: 'yes'
+        silent: 'yes',
+        load_env_local_in_test_env: 'yes'
       });
   });
 
@@ -34,7 +36,8 @@ describe('cli_options', () => {
       '--dotenv-flow-path=/path/to/project',
       '--dotenv-flow-encoding=latin1',
       '--dotenv-flow-purge-dotenv=yes',
-      '--dotenv-flow-silent=yes'
+      '--dotenv-flow-silent=yes',
+      '--dotenv-flow-load-env-local-in-test-env=yes'
     ]))
       .to.deep.equal({
         node_env: 'production',
@@ -42,7 +45,8 @@ describe('cli_options', () => {
         path: '/path/to/project',
         encoding: 'latin1',
         purge_dotenv: 'yes',
-        silent: 'yes'
+        silent: 'yes',
+        load_env_local_in_test_env: 'yes'
       });
   });
 

@@ -1,6 +1,8 @@
 # @codexsoft/dotenv-flow
 
-<img src="https://raw.githubusercontent.com/kerimdzhanov/dotenv-flow/master/dotenv-flow@2x.png" alt="dotenv-flow" width="280" height="140" align="right" />
+<img src="https://raw.githubusercontent.com/codexsoft/dotenv-flow/master/dotenv-flow@2x.png" alt="dotenv-flow" width="280" height="140" align="right" />
+
+**This repo is a fork** of original [dotenv-flow](https://github.com/kerimdzhanov/dotenv-flow) package written by Dan Kerimdzhanov, with some extra features like optional allowing load `.env.local` in `test` environment and TypeScript typings out of the box.
 
 [dotenv](https://github.com/motdotla/dotenv) is a zero-dependency npm module that loads environment variables from a `.env` file into [`process.env`](https://nodejs.org/docs/latest/api/process.html#process_process_env).
 
@@ -8,11 +10,8 @@
 
 Storing configuration in _environment variables_ separate from code and grouping them by environments like _development_, _test_ and _production_ is based on [The Twelve-Factor App](https://12factor.net/config) methodology.
 
-This repo is a fork of original `dotenv-flow` package written by Dan Kerimdzhanov, with some extra features like optional allowing load .env.local for `test` environment.
-
 [![npm version](https://badge.fury.io/js/@codexsoft%2Fdotenv-flow.svg)](https://badge.fury.io/js/@codexsoft%2Fdotenv-flow)
 [![npm downloads](https://badgen.net/npm/dw/dotenv-flow)](https://www.npmjs.com/package/dotenv-flow)
-[![Build Status](https://travis-ci.org/kerimdzhanov/dotenv-flow.svg?branch=master)](https://travis-ci.org/codexsoft/dotenv-flow)
 [![Known Vulnerabilities](https://snyk.io/test/github/codexsoft/dotenv-flow/badge.svg?targetFile=package.json)](https://snyk.io/test/github/codexsoft/dotenv-flow?targetFile=package.json)
 
 
@@ -271,6 +270,7 @@ When preloading **dotenv-flow** using the node's `-r` switch you can use the fol
 * `DOTENV_FLOW_ENCODING` => [`options.encoding`](#optionsencoding);
 * `DOTENV_FLOW_PURGE_DOTENV` => [`options.purge_dotenv`](#optionspurge_dotenv);
 * `DOTENV_FLOW_SILENT` => [`options.silent`](#optionssilent);
+* `DOTENV_FLOW_LOAD_ENV_LOCAL_IN_TEST_ENV` => [`options.load_env_local_in_test_env`](#options_load_env_local_in_test_env);
 
 ```sh
 $ NODE_ENV=production DOTENV_FLOW_PATH=/path/to/env-files-dir node -r dotenv-flow/config your_script.js
@@ -284,6 +284,7 @@ $ NODE_ENV=production DOTENV_FLOW_PATH=/path/to/env-files-dir node -r dotenv-flo
 * `--dotenv-flow-encoding` => [`options.encoding`](#optionsencoding);
 * `--dotenv-flow-purge-dotenv` => [`options.purge_dotenv`](#optionspurge_dotenv);
 * `--dotenv-flow-silent` => [`options.silent`](#optionssilent);
+* `--dotenv-flow-load-env-local-in-test-env` => [`options.load_env_local_in_test_env`](#options_load_env_local_in_test_env);
 
 Don't forget to separate **dotenv-flow/config**-specific CLI switches with `--` because they are not recognized by **Node.js**:
 
@@ -307,7 +308,7 @@ Also, like the original module ([dotenv](https://github.com/motdotla/dotenv)), i
 With the `node_env` option you can force the module to use your custom environment value independent of `process.env.NODE_ENV`:
 
 ```js
-require('dotenv-flow').config({
+require('@codexsoft/dotenv-flow').config({
   node_env: process.argv[2] || 'development'
 });
 ```
@@ -320,7 +321,7 @@ If the `NODE_ENV` environment variable is not set, the module doesn't load/parse
 Therefore, you may want to use `"development"` as a default environment, like:
 
 ```js
-require('dotenv-flow').config({
+require('@codexsoft/dotenv-flow').config({
   default_node_env: 'development'
 });
 ```
@@ -330,17 +331,17 @@ To be clear, just make a note that all the following initialization examples are
 ```js
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-require('dotenv-flow').config();
+require('@codexsoft/dotenv-flow').config();
 ```
 
 ```js
-require('dotenv-flow').config({
+require('@codexsoft/dotenv-flow').config({
   node_env: process.env.NODE_ENV || 'development'
 });
 ```
 
 ```js
-require('dotenv-flow').config({
+require('@codexsoft/dotenv-flow').config({
   node_env: process.env.NODE_ENV,
   default_node_env: 'development'
 });
@@ -356,7 +357,7 @@ You can just choose one that looks prettier for you.
 With the `path` initialization option you can specify a path to `.env*` files directory:
 
 ```js
-require('dotenv-flow').config({
+require('@codexsoft/dotenv-flow').config({
   path: '/path/to/env-files-dir'
 });
 ```
@@ -370,7 +371,7 @@ If the option is not provided, the current working directory is used.
 You can specify the encoding for reading your files containing environment variables.
 
 ```js
-require('dotenv-flow').config({
+require('@codexsoft/dotenv-flow').config({
   encoding: 'base64'
 });
 ```
@@ -389,7 +390,7 @@ environment variables are treated as shell-defined thus having a higher priority
 Setting the `purge_dotenv` option to `true` can gracefully fix this issue.
 
 ```js
-require('dotenv-flow').config({
+require('@codexsoft/dotenv-flow').config({
   purge_dotenv: true
 });
 ```
@@ -401,7 +402,7 @@ require('dotenv-flow').config({
 With this option you can suppress all the console outputs except errors and deprecation warnings.
 
 ```js
-require('dotenv-flow').config({
+require('@codexsoft/dotenv-flow').config({
   silent: true
 });
 ```
@@ -442,7 +443,7 @@ A list of `.env*` filenames.
 ##### Example:
 
 ```js
-const dotenvFlow = require('dotenv-flow');
+const dotenvFlow = require('@codexsoft/dotenv-flow');
 
 const filenames = dotenvFlow.listDotenvFiles('/path/to/project', { node_env: 'development' });
 
@@ -498,7 +499,7 @@ BAZ=qux
 ```
 
 ```js
-const dotenvFlow = require('dotenv-flow');
+const dotenvFlow = require('@codexsoft/dotenv-flow');
 
 const variables = dotenvFlow.parse([
   '/path/to/project/.env',
@@ -530,6 +531,12 @@ A filename or a list of filenames to load.
 
 An optional encoding for reading files.
 
+##### `[options.options_load_env_local_in_test_env]`
+###### Type: `boolean`
+###### Default: `false`
+
+Enable loading load `.env.local` in test environment
+
 ##### `[options.silent]`
 ###### Type: `boolean`
 ###### Default: `false`
@@ -559,7 +566,7 @@ BAZ=qux
 ```
 
 ```js
-const dotenvFlow = require('dotenv-flow');
+const dotenvFlow = require('@codexsoft/dotenv-flow');
 
 process.env.BAZ = 'Yay!';
 
@@ -612,7 +619,7 @@ BAZ=qux
 ```
 
 ```js
-const dotenvFlow = require('dotenv-flow');
+const dotenvFlow = require('@codexsoft/dotenv-flow');
 
 process.env.BAZ = 'Yay!';
 
@@ -638,7 +645,7 @@ console.log(process.env.BAZ); // > 'Yay!'
 
 ## Related packages
 
-* [`@types/dotenv-flow`](https://www.npmjs.com/package/@types/dotenv-flow) – type definitions for using `dotenv-flow` with TypeScript
+* [`dotenv-flow`](https://github.com/kerimdzhanov/dotenv-flow) – original package
 * [`dotenv-flow-webpack`](https://github.com/kerimdzhanov/dotenv-flow-webpack) – a webpack plugin for using `dotenv-flow` in web applications
 * [`dotenv-flow-cli`](https://github.com/ovos/dotenv-flow-cli) – CLI executable that preloads environment variables using `dotenv-flow`
 * [`dotenv-expand`](https://github.com/motdotla/dotenv-expand) – environment variables expansion _(originally designed for `dotenv`, but also compatible with `dotenv-flow`)_
@@ -646,7 +653,7 @@ console.log(process.env.BAZ); // > 'Yay!'
 
 ## Contributing
 
-Feel free to dive in! [Open an issue](https://github.com/kerimdzhanov/dotenv-flow/issues/new) or submit PRs.
+Feel free to dive in! [Open an issue](https://github.com/codexsoft/dotenv-flow/issues/new) or submit PRs.
 
 
 ## Running tests
@@ -666,4 +673,6 @@ $ yarn test
 
 ## License
 
-Licensed under [MIT](LICENSE) © 2018-2020 Dan Kerimdzhanov
+Licensed under [MIT](LICENSE) © 2022 Dmitriy Kozubskiy
+
+Original package [`dotenv-flow`](https://github.com/kerimdzhanov/dotenv-flow) is licensed under [MIT](LICENSE) © 2018-2020 Dan Kerimdzhanov

@@ -68,7 +68,7 @@ describe('dotenv-flow.config (entry point)', () => {
       });
     });
 
-    it("doesn't merge `.env.local` variables for 'test' environment", async () => {
+    it("doesn't merge `.env.local` variables for 'test' environment when load_env_local_in_test_env is FALSE", async () => {
       const environment = {
         NODE_ENV: 'test'
       };
@@ -82,6 +82,20 @@ describe('dotenv-flow.config (entry point)', () => {
 
       expect(variables)
         .to.not.have.property('LOCAL_ONLY_VAR');
+    });
+
+    it("merges `.env.local` variables for 'test' environment when load_env_local_in_test_env is TRUE", async () => {
+      const environment = {
+        NODE_ENV: 'test'
+      };
+
+      const variables = await execHelper('print-env-with-load_env_local_in_test_env.js', directory, environment);
+
+      expect(variables).to.include({
+        DEFAULT_ENV_VAR: 'ok',
+        LOCAL_ENV_VAR: 'ok',
+        LOCAL_ONLY_VAR: 'ok'
+      });
     });
   });
 
