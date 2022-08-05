@@ -1,22 +1,24 @@
 {
   "name": "dotenv-flow",
-  "version": "3.2.0",
+  "version": "1.0.0",
   "description": "Loads environment variables from `.env.[development|test|production][.local]` files",
   "keywords": [
+    "dotenv-flow",
     "dotenv",
     "node_env",
     "development",
     "test",
     "production",
-    "local"
+    "local",
+    "fork"
   ],
-  "homepage": "https://github.com/kerimdzhanov/dotenv-flow#readme",
+  "homepage": "https://github.com/codexsoft/dotenv-flow#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kerimdzhanov/dotenv-flow.git"
+    "url": "git+https://github.com/codexsoft/dotenv-flow.git"
   },
   "bugs": {
-    "url": "https://github.com/kerimdzhanov/dotenv-flow/issues"
+    "url": "https://github.com/codexsoft/dotenv-flow/issues"
   },
   "main": "lib/dotenv-flow.js",
   "files": [
@@ -42,6 +44,6 @@
     "test": "mocha -r mocha.conf.js test/{unit,integration}/*.spec.js",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
   },
-  "author": "Dan Kerimdzhanov",
+  "author": "Dmitriy Kozubskiy, original project author Dan Kerimdzhanov",
   "license": "MIT"
 }
